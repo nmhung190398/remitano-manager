@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.accounts.forEach(x => {
                 this.getDetailAccount(x['id'])
             })
-        }, 15000)
+        }, 20000)
         this.initForm();
     }
 
