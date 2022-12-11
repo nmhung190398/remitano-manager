@@ -1,0 +1,121 @@
+<div class="row">
+
+    <ng-container *ngFor="let account of accounts">
+        <div class="col-12 col-md-12 col-lg-6 py-3">
+            <div class="card card-custom">
+                <div class="card-header border-0 pt-5">
+                    <h3 class="card-title align-items-start flex-column"><span
+                            class="card-label fw-bolder fs-3 mb-1">{{account['remitanoUsername']}}</span>
+                        <span class="text-muted mt-1 fw-bold fs-7">
+                        {{accountDetails[account.id]?.data?.meVndr.available_balance || 0 | currency: "VND"}}
+                        </span>
+                    </h3>
+                    <div class="card-toolbar">
+                        <ul class="nav">
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary" (click)="getDetailAccount(account.id,true)">
+                                    Refresh
+                                </button>
+                                <button class="btn btn-outline-danger">Delete</button>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-body py-3" *ngIf="accountDetails[account.id]?.data">
+                    <div class="tab-content">
+                        <div id="kt_table_widget_5_tab_1" class="tab-pane fade show active">
+                            <div class="table-responsive">
+                                <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
+                                    <thead>
+                                    <tr class="border-0">
+                                        <th class="p-0 w-50px"></th>
+                                        <th class="p-0 min-w-150px"></th>
+                                        <th class="p-0 min-w-110px"></th>
+                                        <th class="p-0 min-w-50px"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let offer of accountDetails[account.id].data?.offers">
+                                        <td style="vertical-align: middle">
+                                            <div *ngIf="offer['offer_type'] == 'buy'"
+                                                 class="symbol symbol-45px me-2"><span class="symbol-label"><img
+                                                    src="./assets/media/buy-icon.png" alt=""
+                                                    class="h-50 align-self-center"></span></div>
+                                            <div *ngIf="offer['offer_type'] == 'sell'"
+                                                 class="symbol symbol-45px me-2"><span class="symbol-label"><img
+                                                    src="./assets/media/sell-icon.png" alt=""
+                                                    class="h-50 align-self-center"></span></div>
+                                        </td>
+
+                                        <td style="vertical-align: middle"><span style="font-size: 16px"
+                                                                                 class="text-dark fw-bolder text-hover-primary mb-2 fs-6">
+                                            Tổng tiền: {{offer.total_amount | currency:'VND'}}</span>
+                                            <span
+                                                    class="font-size-lg text-muted fw-bold d-block">{{offer.bank_name}}</span>
+                                        </td>
+                                        <td style="vertical-align: middle" class="text-end">
+                                            <span *ngIf="!offer.disabled" class="badge badge-success">Hoạt động</span>
+                                            <span *ngIf="offer.disabled" class="badge badge-danger">Tạm dừng</span>
+                                        </td>
+
+                                        <td style="vertical-align: middle" class="text-end">
+                                            <button (click)="enableOffer(account['id'],offer,offerEnableModal)"
+                                                    *ngIf="offer.disabled" class="btn btn btn-outline-success">Bật
+                                            </button>
+                                            <button (click)="disableOffer(account['id'],offer)" *ngIf="!offer.disabled"
+                                                    class="btn btn btn-outline-danger">Tắt
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="accountDetails[account.id]?.data?.earningSummary" class="card-footer border-0 pt-5">
+                    <h4 class="align-items-start d-flex flex-column">
+                        <span
+                                class="card-label fw-bolder fs-3 mb-1">
+                        Tổng hoa hồng dự kiến trả: {{accountDetails[account.id]?.data?.earningSummary.total_earn_this_month | currency: "VND"}}</span>
+                    </h4>
+
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+</div>
+
+<ng-template #offerEnableModal let-modal>
+    <form
+            class="form"
+            [formGroup]="enableOfferForm"
+            novalidate="novalidate"
+            (ngSubmit)="submitEnableOffer(modal)"
+    >
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Bật quảng cáo</h5>
+            <button (click)="modal.dismiss('Cross click')" type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                <i aria-hidden="true" class="ki ki-close"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="totalAmount">Tổng tiền
+                    <span class="text-danger">*</span></label>
+                <input formControlName="totalAmount" type="text" class="form-control form-control-lg" id="totalAmount"
+                       placeholder="Tổng tiền">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button (click)="modal.dismiss('Cross click')" type="button" class="btn btn-light-primary font-weight-bold"
+                    data-dismiss="modal">Đóng
+            </button>
+            <button type="submit" class="btn btn-primary font-weight-bold">OK</button>
+        </div>
+    </form>
+</ng-template>
