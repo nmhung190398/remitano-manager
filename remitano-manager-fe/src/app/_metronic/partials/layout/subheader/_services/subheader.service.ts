@@ -18,6 +18,12 @@ export class SubheaderService implements OnDestroy {
         false
     );
 
+    isAutoRefresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+        false
+    );
+
+
+
     descriptionSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
     breadCrumbsSubject: BehaviorSubject<BreadcrumbItemModel[]> = new BehaviorSubject<BreadcrumbItemModel[]>([]);
     subheaderVersionSubject: BehaviorSubject<string> = new BehaviorSubject<string>('v1'); // [1-6]

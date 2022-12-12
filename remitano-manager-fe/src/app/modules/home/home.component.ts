@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     listEmotion = [];
     isLoading = false;
     intervalRestartAccount = null;
-
+    isAutoRefresh = false
     enableOfferForm: FormGroup
 
     constructor(
@@ -50,6 +50,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         private modalService: NgbModal,
         private splashScreenService: SplashScreenService,
     ) {
+        this.subheader.isAutoRefresh.subscribe(data => {
+            this.isAutoRefresh = data;
+        })
     }
 
 
@@ -65,9 +68,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getAccounts(true);
         this.intervalRestartAccount = setInterval(() => {
             console.log("refreshData")
-            this.accounts.forEach(x => {
-                this.getDetailAccount(x['id'])
-            })
+            if (this.isAutoRefresh) {
+                this.accounts.forEach(x => {
+                    this.getDetailAccount(x['id'])
+                })
+            }
         }, 20000)
         this.initForm();
     }

@@ -21,6 +21,7 @@ export class Subheader7Component implements OnInit {
     title$: Observable<string>;
     breadcrumbs$: Observable<BreadcrumbItemModel[]>;
     description$: Observable<string>;
+    isAutoRefresh = true;
 
     addAccountForm: FormGroup;
 
@@ -35,6 +36,8 @@ export class Subheader7Component implements OnInit {
         this.title$ = this.subheader.titleSubject.asObservable();
         this.breadcrumbs$ = this.subheader.breadCrumbsSubject.asObservable();
         this.description$ = this.subheader.descriptionSubject.asObservable();
+        this.isAutoRefresh = localStorage.getItem("isAutoRefresh") == "true"
+        this.subheader.isAutoRefresh.next(this.isAutoRefresh);
     }
 
     ngOnInit() {
@@ -49,6 +52,12 @@ export class Subheader7Component implements OnInit {
         );
 
         this.initForm();
+    }
+
+    onChangeIsAutoRefresh() {
+        this.isAutoRefresh = !this.isAutoRefresh;
+        localStorage.setItem("isAutoRefresh", String(this.isAutoRefresh));
+        this.subheader.isAutoRefresh.next(this.isAutoRefresh);
     }
 
     submitAddAccount(model) {

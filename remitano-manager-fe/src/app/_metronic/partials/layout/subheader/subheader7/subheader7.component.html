@@ -50,10 +50,7 @@
 
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
-            <!--begin::Button-->
-            <!-- <a href="#" class="btn btn-transparent-white font-weight-bold py-3 px-6 mr-2">
-              Reports
-            </a> -->
+
             <!--end::Button-->
 
             <!--begin::Dropdown-->
@@ -66,6 +63,19 @@
                 <button class="btn btn-info font-weight-bold py-3 px-6" (click)="open(content)">
                     Thêm tài khoản
                 </button>
+            </div>
+
+
+            <!--begin::Button-->
+            <div class="d-flex align-items-center p-3">
+                <label class="m-3">Auto refresh: </label>
+                <span class="switch switch-icon">
+                   <label>
+                       <input type="checkbox" [checked]="isAutoRefresh" (change)="onChangeIsAutoRefresh()"
+                              class="ng-valid ng-dirty ng-touched"><span
+                   ></span>
+                   </label>
+            </span>
             </div>
 
             <!-- <div class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right" ngbDropdownMenu>
@@ -87,17 +97,20 @@
         >
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Account</h5>
-                <button (click)="modal.dismiss('Cross click')" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button (click)="modal.dismiss('Cross click')" type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="mb-10 alert alert-custom alert-light-info alert-dismissible">
                     <div class="alert-text">
-                        <a class="alert-link" href="https://www.youtube.com/watch?v=uwi2Ja0n39Q&list=PLeGCblyZa4vYftBCH4h1nt9wBdOT2SeEr&index=2&ab_channel=DevRemi">
+                        <a class="alert-link"
+                           href="https://www.youtube.com/watch?v=uwi2Ja0n39Q&list=PLeGCblyZa4vYftBCH4h1nt9wBdOT2SeEr&index=2&ab_channel=DevRemi">
                             <strong>=> Video hướng dẫn lấy Access Key và Secret Key</strong></a>
                         <br>
-                        <strong>=> Hay kích hoạt luôn kích hoạt "Xác thực Authenticator/Authy" trên Remitano, để đảm bảo tài khoản được bảo vệ tài khoản của bạn</strong>
+                        <strong>=> Hay kích hoạt luôn kích hoạt "Xác thực Authenticator/Authy" trên Remitano, để đảm bảo
+                            tài khoản được bảo vệ tài khoản của bạn</strong>
                     </div>
                 </div>
                 <div class="form-group">
@@ -114,7 +127,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button (click)="modal.dismiss('Cross click')" type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close
+                <button (click)="modal.dismiss('Cross click')" type="button"
+                        class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close
                 </button>
                 <button type="submit" class="btn btn-primary font-weight-bold">Add</button>
             </div>
